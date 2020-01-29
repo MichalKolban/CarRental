@@ -3,23 +3,20 @@ import Manager.CarService;
 import Model.Car;
 import Model.CarType;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Main {
     //
 //    /*
 //    TODO :
-//    Dodac logger // dodany do carDao ale sie nie wyswietla
+//    Dodac logger
 //
 //    Metody
-//    Wyciagniecie listy wszystkich samocodów
-//    Sprawdzanie czy auto juz nie istnieje
-//    Dodanie nowego auta
-//    Usunięcie auta z listy
 //    Wyciągnięcie wszystkich zarezerwowanych samochodów
 //    Wyciągniecie wszystkich wolnych samochodów
 //    Filtrowanie samochodów na podstawie:
-//    - car type
 //    - ceny wypożyczenia
-//    - Marki samochodu
 //
 //    Dodawanie nowwego uzytkownika
 //    Usunięcie uzytkownika
@@ -30,43 +27,44 @@ public class Main {
 //
     public static void main(String[] args) {
 
+
         CarService service = new CarService();
 
         //to remove
-        CarDAO carDAO = new CarDAO();
+//        CarDAO carDAO = new CarDAO();
 
-        //lista z DB
-        System.out.println("START cała lista");
+        //list of cars in DB
         service.getAllCars();
-        System.out.println("KONIEC cała lista");
 
-        // dodanie nowego auta + sprawdzenie czy juz taki istnieje
-        System.out.println("START dodanie auta");
-        Car mazda = new Car("Mitsubishi", "CX-9", "16661265", CarType.VAN, 5);
+        // adding new vehicle
+        Car mazda = new Car("Mitsubishi", "CX-9", "16661265", CarType.VAN);
         String car = service.addNewCar(mazda);
-        System.out.println("KONIEC dodanie auta");
 
-        // sprawdzenie czy auto istnieje w bazie
-        System.out.println("START czy auto istnieje");
+        // check if car exists in DB
         String plateNumber = "123";
         boolean isIT = service.checkIfCarExists(plateNumber);
         System.out.println("MAIN czy istnieje juz ? " + isIT);
-        System.out.println("KONIEC czy autp istnieje");
 
-        // usunięcie auta z bazy danych
-        System.out.println("START usuniecie z bazy");
+        // delete ca from DB
         String plateNumberToDelete = "ZS12345";
         service.deleteCar(plateNumberToDelete);
-        System.out.println("KONIEC usuniecie z bazy");
 
-        // filtrowanie auta na podstawie CARTYPE
-        System.out.println("START na podstawie cartype");
+        // list of cars based on CARTYPE
         String carType = "suv";
         service.getCarsBasedOnType(carType);
-        System.out.println("KONIEC na podstawie cartype");
+
+        // list of cars based on rental_price
+
+        // list of cars based on car brand
+        System.out.println("CAAAR BRAAND");
+        String carBrand = "Ford";
+        service.getCarsBasedOnBrand(carBrand);
+
 
 
     }
+
+
 }
 
 

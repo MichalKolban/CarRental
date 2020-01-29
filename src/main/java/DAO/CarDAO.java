@@ -19,8 +19,6 @@ public class CarDAO {
 
     public List getAllCars() {
         List<Car> carList = entityManager.createQuery("FROM car_info ", Car.class).getResultList();
-
-        System.out.println("Baza danych prezentuje sie tak");
         for (Car c : carList) {
             System.out.println(c.getCarId() + " " + c.getCarBrand() + " " + c.getCarModel() + " " + c.getCarPlateNumber() + " " + c.getCarType());
         }
@@ -64,7 +62,7 @@ public class CarDAO {
     }
 
 
-    public List<Car> getAllCarTypesBasedOnType(String carType) {
+    public List<Car> getAllCarsBasedOnType(String carType) {
 
         List<Car> carTypeList = entityManager.createQuery("FROM car_info c WHERE c.carType='" + carType + "'").getResultList();
         for (Car obj : carTypeList) {
@@ -73,4 +71,16 @@ public class CarDAO {
         return carTypeList;
     }
 
+    public List<Car> getAllCarsBasedOnBrand(String carBrand) {
+
+        List<Car> carBrandList = entityManager.createQuery("FROM car_info  c WHERE c.carBrand='" + carBrand + "'").getResultList();
+
+        if(!carBrandList.isEmpty())
+        for(Car obj : carBrandList){
+            System.out.println(obj);
+        } else {
+            System.out.println("Sorry we don't have brand : " + carBrand + " in our Rental" );
+        }
+        return carBrandList;
+    }
 }

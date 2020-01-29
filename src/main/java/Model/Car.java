@@ -18,28 +18,25 @@ public class Car {
     @Column(name = "car_type")
     @Enumerated(EnumType.STRING)
     public CarType carType;
-    @Column(name = "door_number")
-    private int doorNumber;
+//    @Column(name = "door_number")     // potrzebne ?
+//    private int doorNumber;
 
 
     public Car() {
     }
 
-    public Car(String carBrand, String carModel, String carPlateNumber, CarType carType, int doorNumber) {
+    public Car(String carBrand, String carModel, String carPlateNumber, CarType carType) {
         this.carBrand = carBrand;
         this.carModel = carModel;
         this.carPlateNumber = carPlateNumber;
         this.carType = carType;
-        this.doorNumber = doorNumber;
     }
 
     public int getCarId() {
         return carId;
     }
 
-//    public void setCarId(int carId) {
-//        this.carId = carId;
-//    }
+//    public void setCarId(int carId) {  this.carId = carId; }
 
     public String getCarBrand() {
         return carBrand;
@@ -65,14 +62,6 @@ public class Car {
         this.carType = carType;
     }
 
-    public int getDoorNumber() {
-        return doorNumber;
-    }
-
-    public void setDoorNumber(int doorNumber) {
-        this.doorNumber = doorNumber;
-    }
-
     public String getCarPlateNumber() {
         return carPlateNumber;
     }
@@ -89,7 +78,6 @@ public class Car {
                 ", carMark='" + carBrand + '\'' +
                 ", carModel='" + carModel + '\'' +
                 ", carType=" + carType +
-                ", doorNumber=" + doorNumber +
                 '}';
     }
 }

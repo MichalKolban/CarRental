@@ -1,8 +1,8 @@
 Model\UserPersonalInfo.class
+Main.class
+DAO\CarDAO.class
 Model\User.class
-JPAApp.class
+Manager\CarService.class
 Model\CarType.class
-Utils\MySqlConfiguration.class
-Student.class
 Utils\StringUtils.class
 Model\Car.class

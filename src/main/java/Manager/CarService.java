@@ -21,8 +21,9 @@ public class CarService {
     public String addNewCar(Car vehicle) {
 
         // sprawdzenie czy carPlateNumber nie ma !^*($@
+        String plateNumber = strUtil.checkSring(vehicle.getCarPlateNumber());
         vehicle.setCarBrand(vehicle.getCarBrand().toUpperCase());
-        vehicle.setCarPlateNumber(vehicle.getCarPlateNumber().toUpperCase());
+        vehicle.setCarPlateNumber(plateNumber.toUpperCase());
 
         boolean exists = carDAO.checkIfCarExistsInDB(vehicle.getCarPlateNumber());
         if (exists) {
@@ -33,35 +34,45 @@ public class CarService {
         }
     }
 
-    public boolean checkIfCarExists(String plateNumber) {
 
-        //sprawdzić czy nie zawiera dziwnch znaków @!@$$
-        plateNumber = plateNumber.toUpperCase();
-
-        return carDAO.checkIfCarExistsInDB(plateNumber);
-    }
 
     public void deleteCar(String plateNumberToDelete) {
         //sprawdzić czy nie zawiera dziwnch znaków @!@$$
-        plateNumberToDelete = plateNumberToDelete.toUpperCase();
+        plateNumberToDelete = strUtil.checkSring(plateNumberToDelete);
 
         carDAO.deleteCarFromDB(plateNumberToDelete);
 
     }
 
+    public boolean checkIfCarExists(String plateNumber) {
+
+        //sprawdzić czy nie zawiera dziwnch znaków @!@$$
+        plateNumber = strUtil.checkSring(plateNumber);
+
+        return carDAO.checkIfCarExistsInDB(plateNumber);
+    }
+
     public void getCarsBasedOnType(String carType) {
-        carType = carType.toUpperCase();
-
+        carType = strUtil.checkSring(carType);
         boolean exists = carTypeExists(carType);
-
         if (exists) {
             System.out.println("Tak mamy cos w bazie");
-            carDAO.getAllCarTypesBasedOnType(carType);
+            carDAO.getAllCarsBasedOnType(carType);
         } else {
             System.out.println("NIE mamy takiego carType w bazie");
         }
     }
 
+    public void getCarsBasedOnBrand(String carBrand) {
+        carBrand = strUtil.checkSring(carBrand);
+
+
+
+        carDAO.getAllCarsBasedOnBrand(carBrand);
+    }
+
+
+    ///////////////////////////////// PRIVATE METHODS /////////////////////////////////
 
     private boolean carTypeExists(String str) {
         for (CarType c : CarType.values()) {
@@ -73,16 +84,5 @@ public class CarService {
         return false;
     }
 
-
-    public List<Car> getAllCarTypes(String carType) {
-
-        carType = carType.toUpperCase();
-
-        // sprawdzenie czy nie ma dziwnych znaków jeszcze
-
-        List<Car> carTypesList = carDAO.getAllCarTypesBasedOnType(carType);
-
-        return carTypesList;
-    }
 }
 
