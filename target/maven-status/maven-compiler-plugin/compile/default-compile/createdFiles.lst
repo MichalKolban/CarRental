@@ -1,0 +1,8 @@
+Model\UserPersonalInfo.class
+Model\User.class
+JPAApp.class
+Model\CarType.class
+Utils\MySqlConfiguration.class
+Student.class
+Utils\StringUtils.class
+Model\Car.class
