@@ -1,53 +1,60 @@
 package Model;
 
+import javax.persistence.*;
+
+@Entity(name = "user")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private int userId;
-//    private String login;            solve it later
-//    private String password;         solve it later
-    private String user_name;
-    private String lastName;
-    private UserPersonalInfo personalInfo;
+    @Column(name = "user_name")
+    private String userName;
+    @Column(name = "user_last_name")
+    private String userLastName;
+
+
 
     public User() {
     }
 
-    public User(int userId, String name, String lastName, UserPersonalInfo personalInfo) {
-        this.userId = userId;
-        this.user_name = name;
-        this.lastName = lastName;
-        this.personalInfo = personalInfo;
+    public User(String name, String userLastName) {
+        this.userName = name;
+        this.userLastName = userLastName;
+
     }
 
     public int getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+//    public void setUserId(int userId) {
+//        this.userId = userId;
+//    }
 
     public String getName() {
-        return user_name;
+        return userName;
     }
 
     public void setName(String name) {
-        this.user_name = name;
+        this.userName = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getUserLastName() {
+        return userLastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUserLastName(String lastName) {
+        this.userLastName = lastName;
     }
 
-    public UserPersonalInfo getPersonalInfo() {
-        return personalInfo;
-    }
-
-    public void setPersonalInfo(UserPersonalInfo personalInfo) {
-        this.personalInfo = personalInfo;
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userLastName='" + userLastName + '\'' +
+                '}';
     }
 }

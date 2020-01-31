@@ -1,8 +1,14 @@
 Model\UserPersonalInfo.class
+Model\CarRentDetails.class
+TESTOWANIE\Student.class
+Manager\CarService.class
+TESTOWANIE\Address.class
+TESTOWANIE\Indeks.class
+Model\CarType.class
+TESTOWANIE\JPAApp.class
 Main.class
 DAO\CarDAO.class
 Model\User.class
-Manager\CarService.class
-Model\CarType.class
+TESTOWANIE\Professor.class
 Utils\StringUtils.class
 Model\Car.class

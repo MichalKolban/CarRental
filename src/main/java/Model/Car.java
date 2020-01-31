@@ -9,17 +9,21 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id")
     private  int carId;
-    @Column(name = "car_brand")
+    @Column(name = "car_brand", nullable = false)
     private String carBrand;
     @Column(name = "car_model")
     private String carModel;
-    @Column(name = "car_plate_number")
+    @Column(name = "car_plate_number", nullable = false)
     private String carPlateNumber;
     @Column(name = "car_type")
     @Enumerated(EnumType.STRING)
     public CarType carType;
-//    @Column(name = "door_number")     // potrzebne ?
-//    private int doorNumber;
+
+    @OneToOne(mappedBy = "car")
+    @JoinColumn(name = "rental_id")
+    private CarRentDetails carRentDetails;
+
+
 
 
     public Car() {
@@ -69,6 +73,19 @@ public class Car {
     public void setCarPlateNumber(String carPlateNumber) {
         this.carPlateNumber = carPlateNumber;
     }
+
+//    public void setCarRentDetails(CarRentDetails carRentDetails) {
+//        this.carRentDetails = carRentDetails;
+//    }
+
+
+//    public CarRentDetails getCarRentDetails() {
+//        return carRentDetails;
+//    }
+//
+//    public void setCarRentDetails(CarRentDetails carRentDetails) {
+//        this.carRentDetails = carRentDetails;
+//    }
 
     @Override
     public String toString() {
