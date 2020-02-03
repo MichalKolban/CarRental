@@ -2,43 +2,32 @@ package DAO;
 
 import Model.Car;
 import Model.CarRentDetails;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class CarDAO {
-
-    Logger log = LoggerFactory.getLogger(CarDAO.class);
 
     EntityManagerFactory factory = Persistence.createEntityManagerFactory("Car_Rental_peristence");
     EntityManager entityManager = factory.createEntityManager();
 
     public List getAllCars() {
         List<Car> carList = entityManager.createQuery("FROM car_info ", Car.class).getResultList();
-        for (Car c : carList) {
-            System.out.println(c.getCarId() + " " + c.getCarBrand() + " " + c.getCarModel() + " " + c.getCarPlateNumber() + " " + c.getCarType());
-        }
         return carList;
     }
 
-    public void addNewCarToDB(Car vehicle) {
-
-        CarRentDetails details = new CarRentDetails();
+    public void addNewCarToDB(Car vehicle, CarRentDetails details) {
 
         entityManager.getTransaction().begin();
+
         entityManager.persist(vehicle);
-
-        details.setCostPerDay(33.12);
-        details.setRentStartDate("22-12-2020");
-        details.setCar(vehicle);
-
         entityManager.persist(details);
+
         entityManager.getTransaction().commit();
     }
 
@@ -60,9 +49,14 @@ public class CarDAO {
 
         entityManager.getTransaction().begin();
         try {
-            Car carToDelate = entityManager.createQuery("FROM car_info WHERE carPlateNumber='" + plateNumberToDelete + "'", Car.class).getSingleResult();
+//            Car carToDelate = entityManager.createQuery("FROM car_info WHERE carPlateNumber='" + plateNumberToDelete + "'", Car.class).getSingleResult();
+//            Object toDelete = entityManager.createNativeQuery("FROM car_info  WHERE carPlateNumber = '" + plateNumberToDelete + "' ").getSingleResult();
+//            Query query = (Query) entityManager.createQuery("FROM car_info c WHERE c.carPlateNumber = '" + plateNumberToDelete + "'");
 
-            entityManager.remove(carToDelate);
+
+//            System.out.println(carToDelete.getCarId() + carToDelete.getCarPlateNumber());
+//
+//            entityManager.remove();
             entityManager.getTransaction().commit();
 
         } catch (Exception e) {
@@ -75,7 +69,7 @@ public class CarDAO {
 
         List<Car> carTypeList = entityManager.createQuery("FROM car_info c WHERE c.carType='" + carType + "'").getResultList();
         for (Car obj : carTypeList) {
-            System.out.println(obj);
+            System.out.println(obj.getCarId() + " " + obj.getCarType() + " " + obj.getCarBrand() + " " + obj.getCarModel());
         }
         return carTypeList;
     }
@@ -86,7 +80,7 @@ public class CarDAO {
 
         if (!carBrandList.isEmpty())
             for (Car obj : carBrandList) {
-                System.out.println(obj);
+                System.out.println(obj.getCarId() + " " + obj.getCarBrand() + " " + obj.getCarModel());
             }
         else {
             System.out.println("Sorry we don't have brand : " + carBrand + " in our Rental");
@@ -94,9 +88,9 @@ public class CarDAO {
         return carBrandList;
     }
 
-    public void getCostam() {
+    public List<Object> getAllAvaliableModels(String carBrand) {
 
-        String carBrand = "Fiat";
+        List<Object> avaliableList = new ArrayList<>();
 
         entityManager.getTransaction().begin();
 
@@ -114,12 +108,18 @@ public class CarDAO {
             String carPlateNumber = (String) item[3];
             String carType = (String) item[4];
             Double costPerDay = (Double) item[5];
-            System.out.println(carId + " " + brand + " " + model + " " + carPlateNumber + " " + carType + " HAJ ZA WYPOZYCZENIE " + costPerDay);
+
+            System.out.println(carId + " " + brand + " " + model + " " + carPlateNumber + " " + carType + " HAJS ZA WYPOZYCZENIE " + costPerDay);
+            avaliableList.add(item);
         }
         entityManager.getTransaction().commit();
+
+        return avaliableList;
     }
 
-    public void getCostamWSZYSTKO() {
+    public List<Object> getAllAvaliableCars() {
+
+        ArrayList<Object> avaliableList = new ArrayList<>();
 
         entityManager.getTransaction().begin();
 
@@ -136,8 +136,12 @@ public class CarDAO {
             String carPlateNumber = (String) item[3];
             String carType = (String) item[4];
             Double costPerDay = (Double) item[5];
-            System.out.println(carId + " " + brand + " " + model + " " + carPlateNumber + " " + carType + " HAJ ZA WYPOZYCZENIE " + costPerDay);
+
+
+            System.out.println("AVALIABLE RIGHT NOW : " + carId + " " + brand + " " + model + " " + carPlateNumber + " " + carType + " HAJS ZA WYPOZYCZENIE " + costPerDay);
+            avaliableList.add(item);
         }
         entityManager.getTransaction().commit();
+        return avaliableList;
     }
 }
