@@ -10,8 +10,8 @@ public class CarRentDetails {
     private int carRentDetailsId;
 
     @OneToOne
-    @JoinColumn(name = "carId")
-    private Car car;
+    @JoinColumn(name = "car_info_id")
+    private Car carInfoId;
 
     @Column(name = "cost_per_day")
     private Double costPerDay;
@@ -22,6 +22,9 @@ public class CarRentDetails {
     @Column(name = "rent_end_date")
     private String rentEndDate;
 
+//    @OneToOne
+//    private Car car;
+
 
     public CarRentDetails() {
     }
@@ -30,6 +33,9 @@ public class CarRentDetails {
         this.costPerDay = costPerDay;
         this.rentStartDate = rentStartDate;
         this.rentEndDate = rentEndDate;
+    }
+
+    public CarRentDetails(CarRentDetails carRentDetails) {
     }
 
     public int getCarRentDetailsId() {
@@ -66,12 +72,12 @@ public class CarRentDetails {
         this.rentEndDate = rentEndDate;
     }
 
-    public Car getCar() {
-        return car;
+    public Car getCarInfoId() {
+        return carInfoId;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCarInfoId(Car carInfoId) {
+        this.carInfoId = carInfoId;
     }
 
     @Override

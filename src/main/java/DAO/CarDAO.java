@@ -2,6 +2,7 @@ package DAO;
 
 import Model.Car;
 import Model.CarRentDetails;
+import Model.CarType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,8 +19,35 @@ public class CarDAO {
 
     public List getAllCars() {
         List<Car> carList = entityManager.createQuery("FROM car_info ", Car.class).getResultList();
+
+//        Car car = new Car();
+//
+//        List<Car> carList = new ArrayList<>();
+//
+//        Query query = entityManager.createNativeQuery("SELECT car_id, car_brand, car_model, car_plate_number, car_type FROM car_info");
+//
+//        Iterator iterator = query.getResultList().iterator();
+//        Object[] item = (Object[]) iterator.next();
+//        int id = (int) item[0];
+//        String carBrand = (String) item[1];
+//        String carModel = (String) item[2];
+//        String carPlateNumber = (String) item[3];
+//        CarType carType = (CarType) item[4];
+
+
+
+
         return carList;
     }
+
+//    public void addNewCarToDB(Car vehicle) {
+//
+//        entityManager.getTransaction().begin();
+//
+//        entityManager.persist(vehicle);
+//
+//        entityManager.getTransaction().commit();
+//    }
 
     public void addNewCarToDB(Car vehicle, CarRentDetails details) {
 
@@ -49,15 +77,14 @@ public class CarDAO {
 
         entityManager.getTransaction().begin();
         try {
-//            Car carToDelate = entityManager.createQuery("FROM car_info WHERE carPlateNumber='" + plateNumberToDelete + "'", Car.class).getSingleResult();
-//            Object toDelete = entityManager.createNativeQuery("FROM car_info  WHERE carPlateNumber = '" + plateNumberToDelete + "' ").getSingleResult();
-//            Query query = (Query) entityManager.createQuery("FROM car_info c WHERE c.carPlateNumber = '" + plateNumberToDelete + "'");
 
+            Car car = entityManager.createQuery("FROM car_info WHERE carPlateNumber='" + plateNumberToDelete + "'", Car.class).getSingleResult();
 
-//            System.out.println(carToDelete.getCarId() + carToDelete.getCarPlateNumber());
-//
-//            entityManager.remove();
+            entityManager.remove(car);
+
             entityManager.getTransaction().commit();
+
+            System.out.println("DAO : CAR DELETED FROM DB");
 
         } catch (Exception e) {
             entityManager.getTransaction().rollback();

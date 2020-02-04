@@ -19,7 +19,7 @@ public class Car {
     @Enumerated(EnumType.STRING)
     public CarType carType;
 
-    @OneToOne(mappedBy = "car")
+    @OneToOne(mappedBy = "carInfoId", cascade = CascadeType.ALL)
     @JoinColumn(name = "rental_id")
     private CarRentDetails carRentDetails;
 
@@ -29,12 +29,28 @@ public class Car {
     public Car() {
     }
 
+    public Car(String carBrand, String carModel, String carPlateNumber, CarType carType, CarRentDetails carRentDetails) {
+        this.carBrand = carBrand;
+        this.carModel = carModel;
+        this.carPlateNumber = carPlateNumber;
+        this.carType = carType;
+        this.carRentDetails = new CarRentDetails(carRentDetails);
+    }
+
     public Car(String carBrand, String carModel, String carPlateNumber, CarType carType) {
         this.carBrand = carBrand;
         this.carModel = carModel;
         this.carPlateNumber = carPlateNumber;
         this.carType = carType;
     }
+
+//    public Car(String carBrand, String carModel, String carPlateNumber, CarType carType, Integer detailsCarId) {
+//        this.carBrand = carBrand;
+//        this.carModel = carModel;
+//        this.carPlateNumber = carPlateNumber;
+//        this.carType = carType;
+//        this.carRentDetails = new CarRentDetails()
+//    }
 
     public int getCarId() {
         return carId;

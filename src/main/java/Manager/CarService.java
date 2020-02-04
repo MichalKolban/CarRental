@@ -19,6 +19,21 @@ public class CarService {
         return allCars;
     }
 
+//    public String addNewCar(Car vehicle) {
+//
+//        String plateNumber = strUtil.checkSring(vehicle.getCarPlateNumber());
+//        vehicle.setCarBrand(vehicle.getCarBrand().toUpperCase());
+//        vehicle.setCarPlateNumber(plateNumber.toUpperCase());
+//
+//        boolean exists = carDAO.checkIfCarExistsInDB(vehicle.getCarPlateNumber());
+//        if (exists) {
+//            return "SERVICE : Car already exists";
+//        } else {
+//            carDAO.addNewCarToDB(vehicle);
+//            return "SERVICE : Car saved in DB";
+//        }
+//    }
+
     public String addNewCar(Car vehicle, CarRentDetails details) {
 
         String plateNumber = strUtil.checkSring(vehicle.getCarPlateNumber());
@@ -37,9 +52,8 @@ public class CarService {
 
 
     public void deleteCar(String plateNumberToDelete) {
-        //sprawdzić czy nie zawiera dziwnch znaków @!@$$
-        plateNumberToDelete = strUtil.checkSring(plateNumberToDelete);
 
+        plateNumberToDelete = strUtil.checkSring(plateNumberToDelete);
         boolean exists = checkIfCarExists(plateNumberToDelete);
 
         if(exists) {
@@ -64,7 +78,7 @@ public class CarService {
         if (exists) {
             carDAO.getAllCarsBasedOnType(carType);
         } else {
-            System.out.println("NIE mamy takiego carType w bazie");
+            System.out.println("Sorry We don't have " + carType + " type in Rental");
         }
     }
 
@@ -94,7 +108,6 @@ public class CarService {
 
     private boolean carTypeExists(String str) {
         for (CarType c : CarType.values()) {
-            System.out.println(c);
             if (c.toString().equals(str)) {
                 return true;
             }

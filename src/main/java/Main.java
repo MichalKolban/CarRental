@@ -38,20 +38,43 @@ public class Main {
         String carBrand = "";
 
      // 1 All Car in DB
-//        List<Car> list = service.getAllCars();
-//        for(Car c : list){
-//            System.out.println(c.getCarId() + " " + c.getCarBrand() + " " + c.getCarModel() + " " + c.getCarPlateNumber());
-//        }
+        List<Car> list = service.getAllCars();
+        for(Car c : list){
+            System.out.println(c.getCarId() + " " + c.getCarBrand() + "  | model : " + c.getCarModel() + " | plate number : " + c.getCarPlateNumber());
+        }
 
 //    // 2 list of cars based on car brand
-//        carBrand = "Ferrari";
+//        carBrand = "reksus";
 //        service.getCarsBasedOnBrand(carBrand);
 //
 //    // 3 list of cars based on car type
-//        String carType = "van";
+//        String carType = "minivan";
 //        service.getCarsBasedOnType(carType);
-//
-//     // 4 All Avaliable Cars
+
+     // 7 Delete car from DB
+//        String plateNumberToDelete = "ZS1234";
+//        service.deleteCar(plateNumberToDelete);
+
+     // 8 Add new car to DB
+//        Car car = new Car("Fiat", "126p","ZS123", CarType.SPORT);
+//        details.setCarInfoId(car);
+//        details.setCostPerDay(50.20);
+//        String respond = service.addNewCar(car, details);
+//        System.out.println(respond);
+
+//     // 9 Check if car Exists in DB
+        String plateNumber = "ZS11112";
+        boolean exists = service.checkIfCarExists(plateNumber);
+        System.out.println("MAIN: Exists ? " + exists);
+
+
+
+
+        /////////////////////////////////////////
+        // need to be improved
+        /////////////////////////////////////////
+
+//        // 4 All Avaliable Cars
 //        // CHECK IF CAR IS AVALIABLE
 //        // need to secure if list is empty
 //        service.getAllAvaliableCars();
@@ -64,23 +87,10 @@ public class Main {
 //
 //     // 6 All Avaliable Cars Based on price
 //
-//     // 7 Delete car from DB
-        // need to delete also from carRetnalDetails in DB
-        // SOMETHING WRONG, NEED TO BE IMPORVED !!!!!!!!!!!
-//        String plateNumberToDelete = "123ZZSW";
-//        service.deleteCar(plateNumberToDelete);
-//
-//     // 8 Add new car to DB
-//        Car car = new Car("Ferrari", "LaFerrari","123ZZSW", CarType.SPORT);
-//        details.setCar(car);
-//        details.setCostPerDay(415.00);
-//        String respond = service.addNewCar(car, details);
-//        System.out.println(respond);
-//
-//     // 9 Check if car Exists in DB
-//        String plateNumber = "123ZZSW";
-//        boolean isIT = service.checkIfCarExists(plateNumber);
-//        System.out.println("MAIN czy istnieje juz ? " + isIT);
+
+
+
+
 
     }
 }
