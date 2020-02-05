@@ -2,14 +2,11 @@ package DAO;
 
 import Model.Car;
 import Model.CarRentDetails;
-import Model.CarType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class CarDAO {
@@ -19,35 +16,9 @@ public class CarDAO {
 
     public List getAllCars() {
         List<Car> carList = entityManager.createQuery("FROM car_info ", Car.class).getResultList();
-
-//        Car car = new Car();
-//
-//        List<Car> carList = new ArrayList<>();
-//
-//        Query query = entityManager.createNativeQuery("SELECT car_id, car_brand, car_model, car_plate_number, car_type FROM car_info");
-//
-//        Iterator iterator = query.getResultList().iterator();
-//        Object[] item = (Object[]) iterator.next();
-//        int id = (int) item[0];
-//        String carBrand = (String) item[1];
-//        String carModel = (String) item[2];
-//        String carPlateNumber = (String) item[3];
-//        CarType carType = (CarType) item[4];
-
-
-
-
         return carList;
     }
 
-//    public void addNewCarToDB(Car vehicle) {
-//
-//        entityManager.getTransaction().begin();
-//
-//        entityManager.persist(vehicle);
-//
-//        entityManager.getTransaction().commit();
-//    }
 
     public void addNewCarToDB(Car vehicle, CarRentDetails details) {
 
@@ -69,7 +40,7 @@ public class CarDAO {
             System.out.println("DAO : OBJECT EXISTS");
             return true;
         }
-        System.out.println("DAO : OBJECT DON'T EXISTS");
+        System.out.println("DAO : OBJECT DOESN'T EXISTS");
         return false;
     }
 
@@ -95,9 +66,7 @@ public class CarDAO {
     public List<Car> getAllCarsBasedOnType(String carType) {
 
         List<Car> carTypeList = entityManager.createQuery("FROM car_info c WHERE c.carType='" + carType + "'").getResultList();
-        for (Car obj : carTypeList) {
-            System.out.println(obj.getCarId() + " " + obj.getCarType() + " " + obj.getCarBrand() + " " + obj.getCarModel());
-        }
+
         return carTypeList;
     }
 
@@ -115,60 +84,85 @@ public class CarDAO {
         return carBrandList;
     }
 
-    public List<Object> getAllAvaliableModels(String carBrand) {
 
-        List<Object> avaliableList = new ArrayList<>();
+    public List<Car> getAllAvaliableModels(String carBrand) {
 
         entityManager.getTransaction().begin();
 
-        Query query = entityManager.createNativeQuery("SELECT car_id, car_brand, car_model, car_plate_number, car_type, cost_per_day FROM " +
-                " car_info , car_rent_details WHERE car_info.car_id = car_rent_details.car_rent_details_id AND " +
-                " car_info.car_brand = '" + carBrand + "'");
 
-        Iterator iterator = query.getResultList().iterator();
+        List<Car> avaliableModelsList = entityManager.createNativeQuery("SELECT c.car_id, c.car_brand, c.car_model, c.car_plate_number, c.car_type FROM car_info c WHERE c.car_brand = '" + carBrand + "' AND car_id IN " +
+                " (SELECT car_info_id FROM car_rent_details WHERE avaliable_to_rent = true)", Car.class).getResultList();
 
-        while (iterator.hasNext()) {
-            Object[] item = (Object[]) iterator.next();
-            int carId = (int) item[0];
-            String brand = (String) item[1];
-            String model = (String) item[2];
-            String carPlateNumber = (String) item[3];
-            String carType = (String) item[4];
-            Double costPerDay = (Double) item[5];
+        if (avaliableModelsList.isEmpty()) {
+            return null;
+        } else {
 
-            System.out.println(carId + " " + brand + " " + model + " " + carPlateNumber + " " + carType + " HAJS ZA WYPOZYCZENIE " + costPerDay);
-            avaliableList.add(item);
+            for (Car c : avaliableModelsList) {
+                System.out.println("DAO : " + c.getCarId() + " " + c.getCarBrand() + " " + c.getCarModel());
+            }
+
+            entityManager.getTransaction().commit();
+
+            return avaliableModelsList;
         }
-        entityManager.getTransaction().commit();
-
-        return avaliableList;
     }
 
-    public List<Object> getAllAvaliableCars() {
-
-        ArrayList<Object> avaliableList = new ArrayList<>();
+    public List<Car> getAllAvaliableCars(){
 
         entityManager.getTransaction().begin();
 
-        Query query = entityManager.createNativeQuery("SELECT car_id, car_brand, car_model, car_plate_number, car_type, cost_per_day FROM " +
-                " car_info , car_rent_details WHERE car_info.car_id = car_rent_details.car_rent_details_id ");
+        List<Car> avaliableCarsList =  entityManager.createNativeQuery("SELECT car_id, car_brand, car_model, car_plate_number, car_type FROM car_info WHERE car_id IN " +
+                " (SELECT car_info_id FROM car_rent_details WHERE avaliable_to_rent = true)", Car.class).getResultList();
 
-        Iterator iterator = query.getResultList().iterator();
-
-        while (iterator.hasNext()) {
-            Object[] item = (Object[]) iterator.next();
-            int carId = (int) item[0];
-            String brand = (String) item[1];
-            String model = (String) item[2];
-            String carPlateNumber = (String) item[3];
-            String carType = (String) item[4];
-            Double costPerDay = (Double) item[5];
-
-
-            System.out.println("AVALIABLE RIGHT NOW : " + carId + " " + brand + " " + model + " " + carPlateNumber + " " + carType + " HAJS ZA WYPOZYCZENIE " + costPerDay);
-            avaliableList.add(item);
-        }
         entityManager.getTransaction().commit();
-        return avaliableList;
+
+        return avaliableCarsList;
+    }
+
+
+    public List<Car> gettAllAvaliableCarsBasedOnPrice(Double price) {
+
+        entityManager.getTransaction().begin();
+
+        List<Car> resultList = entityManager.createNativeQuery("SELECT c.car_id, c.car_brand, c.car_model, c.car_plate_number, c.car_type, d.cost_per_day FROM car_info c JOIN car_rent_details d ON (c.car_id = d.car_info_id) WHERE d.cost_per_day < '" + price + "' AND c.car_id IN " +
+                " (SELECT car_info_id FROM car_rent_details WHERE avaliable_to_rent = true)", Car.class).getResultList();
+
+
+        entityManager.getTransaction().commit();
+
+        return resultList;
+    }
+
+    public Car findCar(String plateNumber) {
+
+        entityManager.getTransaction().begin();
+
+        Car car = entityManager.createQuery("FROM car_info WHERE carPlateNumber='" + plateNumber + "'", Car.class).getSingleResult();
+
+        System.out.println(car.toString());
+
+        entityManager.getTransaction().commit();
+
+        return car;
+
+    }
+
+    public void updatePricePerDay(double price, String plateNumber) {
+
+
+        Car carToUpdate = findCar(plateNumber);
+
+        int carIdToUpdate = carToUpdate.getCarId();
+
+        CarRentDetails carRentDetails = entityManager.find(CarRentDetails.class, carIdToUpdate);
+
+        carRentDetails.setCostPerDay(price);
+
+        entityManager.getTransaction().begin();
+
+        entityManager.merge(carRentDetails);
+
+        entityManager.getTransaction().commit();
+
     }
 }

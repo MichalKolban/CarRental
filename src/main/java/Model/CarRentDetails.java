@@ -22,6 +22,9 @@ public class CarRentDetails {
     @Column(name = "rent_end_date")
     private String rentEndDate;
 
+    @Column(name = "avaliable_to_rent")
+    private boolean avaliableToRent;
+
 //    @OneToOne
 //    private Car car;
 
@@ -29,10 +32,11 @@ public class CarRentDetails {
     public CarRentDetails() {
     }
 
-    public CarRentDetails(double costPerDay, String rentStartDate, String rentEndDate) {
+    public CarRentDetails(double costPerDay, String rentStartDate, String rentEndDate, boolean avaliableToRent) {
         this.costPerDay = costPerDay;
         this.rentStartDate = rentStartDate;
         this.rentEndDate = rentEndDate;
+        this.avaliableToRent = true;
     }
 
     public CarRentDetails(CarRentDetails carRentDetails) {

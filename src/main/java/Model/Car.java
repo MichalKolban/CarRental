@@ -20,7 +20,7 @@ public class Car {
     public CarType carType;
 
     @OneToOne(mappedBy = "carInfoId", cascade = CascadeType.ALL)
-    @JoinColumn(name = "rental_id")
+//    @JoinColumn(name = "rental_id")
     private CarRentDetails carRentDetails;
 
 

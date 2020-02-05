@@ -72,14 +72,21 @@ public class CarService {
         return carDAO.checkIfCarExistsInDB(plateNumber);
     }
 
-    public void getCarsBasedOnType(String carType) {
+    public List<Car> getCarsBasedOnType(String carType) {
+        List<Car> allCarsBasedOnType = new ArrayList<>();
         carType = strUtil.checkSring(carType);
         boolean exists = carTypeExists(carType);
-        if (exists) {
-            carDAO.getAllCarsBasedOnType(carType);
-        } else {
-            System.out.println("Sorry We don't have " + carType + " type in Rental");
+        try {
+            if (exists) {
+                allCarsBasedOnType = carDAO.getAllCarsBasedOnType(carType);
+                return allCarsBasedOnType;
+            } else {
+                System.out.println("Sorry We don't have " + carType + " type in Rental");
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Sorry We don't have " + carType + " type in Rental" + e);
         }
+        return allCarsBasedOnType;
     }
 
     public void getCarsBasedOnBrand(String carBrand) {
@@ -88,20 +95,44 @@ public class CarService {
         carDAO.getAllCarsBasedOnBrand(carBrand);
     }
 
-    public List<Object> getAllAvaliableModels(String carBrand){
-        List<Object> avaliableList = new ArrayList<>();
+    public List<Car> getAllAvaliableModels(String carBrand){
 
         carBrand = strUtil.checkSring(carBrand);
 
-        avaliableList = carDAO.getAllAvaliableModels(carBrand);
+        List<Car> avaliableList = carDAO.getAllAvaliableModels(carBrand);
 
         return avaliableList;
     }
 
-    public List<Object> getAllAvaliableCars() {
-        List<Object> avaliableList = carDAO.getAllAvaliableCars();
-//        avaliableList = carDAO.getAllAvaliableCars();
+    public List<Car> getAllAvaliableCars() {
+
+        List<Car> avaliableList = carDAO.getAllAvaliableCars();
+
         return avaliableList;
+    }
+
+    public List<Car> getAllCarsBasedOnPrice(Double price) {
+
+        // no validation for now
+
+        List<Car> carsList = carDAO.gettAllAvaliableCarsBasedOnPrice(price);
+
+        return carsList;
+    }
+
+    public void updatePricePerDay(double price, String plateNumber) {
+
+        plateNumber = strUtil.checkSring(plateNumber);
+
+        carDAO.updatePricePerDay(price, plateNumber);
+
+    }
+
+    public Car findCar(String plateNumber) {
+
+        carDAO.findCar(plateNumber);
+
+        return null;
     }
 
     ///////////////////////////////// PRIVATE METHODS /////////////////////////////////
@@ -114,7 +145,6 @@ public class CarService {
         }
         return false;
     }
-
 
 }
 
