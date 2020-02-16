@@ -48,7 +48,7 @@ public class Main {
 //          ========================================
 
         List<Car> list = service.getAllCars();
-        for(Car c : list){
+        for (Car c : list) {
             System.out.println(c.getCarId() + " " + c.getCarBrand() + "  | model : " + c.getCarModel() + " | plate number : " + c.getCarPlateNumber());
         }
 
@@ -57,37 +57,37 @@ public class Main {
 //          ========== 2 list of cars based on car brand ==
 //          ===============================================
 
-//        carBrand = "FORD";
-//        service.getCarsBasedOnBrand(carBrand);
+        carBrand = "FORD";
+        service.getCarsBasedOnBrand(carBrand);
 
 
 //          ===============================================
 //          ========== 3 list of cars based on car type ===
 //          ===============================================
 
-//        String carType = "mini";
-//        List<Car> carsBasedOnType = service.getCarsBasedOnType(carType);
-//        for(Car c : carsBasedOnType){
-//            System.out.println(c.toString());
-//        }
+        String carType = "sport";
+        List<Car> carsBasedOnType = service.getCarsBasedOnType(carType);
+        for (Car c : carsBasedOnType) {
+            System.out.println(c.toString());
+        }
 
 
 //          ===============================================
 //          ========== 4 All Avaliable Cars ===============
 //          ===============================================
 
-//        List<Car> allAvaliableCars = service.getAllAvaliableCars();
-//        for(Car c : allAvaliableCars){
-//            System.out.println("MAIN " + c.toString());
-//        }
+        List<Car> allAvaliableCars = service.getAllAvaliableCars();
+        for (Car c : allAvaliableCars) {
+            System.out.println("MAIN " + c.toString());
+        }
 
 
 //          ======================================================
 //          ========== 5 All Avaliable Cars Based on CarBrand ====
 //          ======================================================
 
-//        carBrand = "FORD";
-//        List<Car> allAvaliableModels = service.getAllAvaliableModels(carBrand);
+        carBrand = "Toyota";
+        List<Car> allAvaliableModels = service.getAllAvaliableModels(carBrand);
 
 
 //          ==================================================
@@ -104,43 +104,44 @@ public class Main {
 //          ========== 7 Delete car from DB ===============
 //          ===============================================
 
-//        String plateNumberToDelete = "ZS11117";
-//        service.deleteCar(plateNumberToDelete);
+        String plateNumberToDelete = "ZS11117";
+        service.deleteCar(plateNumberToDelete);
 
 
 //          ===============================================
 //          ========== 8 Add new car to DB ================
 //          ===============================================
 
-//        Car car = new Car("Fiat", "126p","ZS123", CarType.SPORT);
-//        details.setCarInfoId(car);
-//        details.setCostPerDay(50.20);
-//        String respond = service.addNewCar(car, details);
-//        System.out.println(respond);
+        Car car = new Car("Fiat", "126p", "ZS123", CarType.SPORT);
+        details.setCarInfoId(car);
+        details.setCostPerDay(50.20);
+        String respond = service.addNewCar(car, details);
+        System.out.println(respond);
 
 
 //          ===============================================
 //          ========== 9 Check if car Exists in DB ========
 //          ===============================================
 
-//        plateNumber = "ZS11115";
-//        boolean exists = service.checkIfCarExists(plateNumber);
-//        System.out.println("MAIN: Exists ? " + exists);
+        plateNumber = "ZS11115";
+        boolean exists = service.checkIfCarExists(plateNumber);
+        System.out.println("MAIN: Exists ? " + exists);
 
 //          ===============================================
 //          ========== 10 Edit price of price per day =====
 //          ===============================================
 
-//        double price = 89.99;
-//        plateNumber = "ZS11112";
-//        service.updatePricePerDay(price, plateNumber);
+        double price = 89.99;
+        plateNumber = "ZS11112";
+        service.updatePricePerDay(price, plateNumber);
 
 //          ===============================================
 //          ========== 11 Find car based on plateNumber ===
 //          ===============================================
 
 //        plateNumber = "ZS11111";
-//        service.findCar(plateNumber);
+//        Car car = service.findCar(plateNumber);
+//            System.out.println(car.getCarId() + " " + car.getCarBrand() + " " + car.getCarModel() + " " + car.getCarPlateNumber());
 
 
     }

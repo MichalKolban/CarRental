@@ -1,5 +1,7 @@
 Model\UserPersonalInfo.class
 Main.class
+ENDPOINTS\CarEndpoints.class
+Model\UserRentDetails.class
 DAO\CarDAO.class
 Model\User.class
 Model\CarRentDetails.class

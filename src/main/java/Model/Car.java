@@ -2,13 +2,13 @@ package Model;
 
 import javax.persistence.*;
 
-@Entity (name = "car_info")
+@Entity(name = "car_info")
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id")
-    private  int carId;
+    private int carId;
     @Column(name = "car_brand", nullable = false)
     private String carBrand;
     @Column(name = "car_model")
@@ -20,11 +20,7 @@ public class Car {
     public CarType carType;
 
     @OneToOne(mappedBy = "carInfoId", cascade = CascadeType.ALL)
-//    @JoinColumn(name = "rental_id")
     private CarRentDetails carRentDetails;
-
-
-
 
     public Car() {
     }
@@ -44,19 +40,9 @@ public class Car {
         this.carType = carType;
     }
 
-//    public Car(String carBrand, String carModel, String carPlateNumber, CarType carType, Integer detailsCarId) {
-//        this.carBrand = carBrand;
-//        this.carModel = carModel;
-//        this.carPlateNumber = carPlateNumber;
-//        this.carType = carType;
-//        this.carRentDetails = new CarRentDetails()
-//    }
-
     public int getCarId() {
         return carId;
     }
-
-//    public void setCarId(int carId) {  this.carId = carId; }
 
     public String getCarBrand() {
         return carBrand;
@@ -89,19 +75,6 @@ public class Car {
     public void setCarPlateNumber(String carPlateNumber) {
         this.carPlateNumber = carPlateNumber;
     }
-
-//    public void setCarRentDetails(CarRentDetails carRentDetails) {
-//        this.carRentDetails = carRentDetails;
-//    }
-
-
-//    public CarRentDetails getCarRentDetails() {
-//        return carRentDetails;
-//    }
-//
-//    public void setCarRentDetails(CarRentDetails carRentDetails) {
-//        this.carRentDetails = carRentDetails;
-//    }
 
     @Override
     public String toString() {

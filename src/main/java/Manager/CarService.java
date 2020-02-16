@@ -19,21 +19,6 @@ public class CarService {
         return allCars;
     }
 
-//    public String addNewCar(Car vehicle) {
-//
-//        String plateNumber = strUtil.checkSring(vehicle.getCarPlateNumber());
-//        vehicle.setCarBrand(vehicle.getCarBrand().toUpperCase());
-//        vehicle.setCarPlateNumber(plateNumber.toUpperCase());
-//
-//        boolean exists = carDAO.checkIfCarExistsInDB(vehicle.getCarPlateNumber());
-//        if (exists) {
-//            return "SERVICE : Car already exists";
-//        } else {
-//            carDAO.addNewCarToDB(vehicle);
-//            return "SERVICE : Car saved in DB";
-//        }
-//    }
-
     public String addNewCar(Car vehicle, CarRentDetails details) {
 
         String plateNumber = strUtil.checkSring(vehicle.getCarPlateNumber());
@@ -50,25 +35,20 @@ public class CarService {
     }
 
 
-
     public void deleteCar(String plateNumberToDelete) {
 
         plateNumberToDelete = strUtil.checkSring(plateNumberToDelete);
         boolean exists = checkIfCarExists(plateNumberToDelete);
 
-        if(exists) {
+        if (exists) {
             carDAO.deleteCarFromDB(plateNumberToDelete);
         } else {
             System.out.println("Sorry, no : " + plateNumberToDelete + " in DB");
         }
-
     }
 
     public boolean checkIfCarExists(String plateNumber) {
-
-        //sprawdzić czy nie zawiera dziwnch znaków @!@$$
         plateNumber = strUtil.checkSring(plateNumber);
-
         return carDAO.checkIfCarExistsInDB(plateNumber);
     }
 
@@ -90,49 +70,36 @@ public class CarService {
     }
 
     public void getCarsBasedOnBrand(String carBrand) {
-
         carBrand = strUtil.checkSring(carBrand);
         carDAO.getAllCarsBasedOnBrand(carBrand);
     }
 
-    public List<Car> getAllAvaliableModels(String carBrand){
-
+    public List<Car> getAllAvaliableModels(String carBrand) {
         carBrand = strUtil.checkSring(carBrand);
-
         List<Car> avaliableList = carDAO.getAllAvaliableModels(carBrand);
-
         return avaliableList;
     }
 
     public List<Car> getAllAvaliableCars() {
-
         List<Car> avaliableList = carDAO.getAllAvaliableCars();
-
         return avaliableList;
     }
 
     public List<Car> getAllCarsBasedOnPrice(Double price) {
-
         // no validation for now
-
         List<Car> carsList = carDAO.gettAllAvaliableCarsBasedOnPrice(price);
-
         return carsList;
     }
 
     public void updatePricePerDay(double price, String plateNumber) {
-
         plateNumber = strUtil.checkSring(plateNumber);
-
         carDAO.updatePricePerDay(price, plateNumber);
 
     }
 
     public Car findCar(String plateNumber) {
-
-        carDAO.findCar(plateNumber);
-
-        return null;
+        Car car = carDAO.findCar(plateNumber);
+        return car;
     }
 
     ///////////////////////////////// PRIVATE METHODS /////////////////////////////////
@@ -145,6 +112,5 @@ public class CarService {
         }
         return false;
     }
-
 }
 

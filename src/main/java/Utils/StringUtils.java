@@ -22,5 +22,4 @@ public class StringUtils {
         boolean matches = matcher.matches();
         return matches;
     }
-
 }
